@@ -12,10 +12,6 @@ density_sea_level = 1.225  # rho
 layer_boundaries = [0, 11000, 20000, 32000, 47000, 51000, 71000, 86000]
 layer_gradients = [-0.0065, 0, 0.0010, 0.0028, 0, -0.0028, -0.0020]
 
-# Initiate current values at the sea_level
-current_temperature = temperature_sea_level
-current_pressure = pressure_sea_level
-
 
 class HeightError(Exception):
     pass
@@ -69,8 +65,8 @@ def correct_units(input_value, unit):
 
 
 def calculate_isa(height_input):
-    global current_pressure
-    global current_temperature
+    current_temperature = temperature_sea_level
+    current_pressure = pressure_sea_level
     if height_input <= 0 or height_input > 86000:
         raise HeightError
     for layer_i in range(1, len(layer_boundaries)):
@@ -88,9 +84,6 @@ def calculate_isa(height_input):
     rounded_pressure = round(current_pressure, 3)
     rounded_temperature = round(current_temperature, 3)
     rounded_density = round(current_density, 5)
-
-    current_pressure = pressure_sea_level
-    current_temperature = temperature_sea_level
 
     return rounded_pressure, rounded_temperature, rounded_density
 
