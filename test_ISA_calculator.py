@@ -5,7 +5,7 @@ import pytest
 def test_unit_converters():
     assert temperature_kelvin_to_celsius(0) == -273.15
     assert temperature_celsius_to_kelvin(0) == 273.15
-    assert correct_units(10, 1) == 10
+    assert correct_units(10, 1) == 15
     assert correct_units(10, 2) == 10 / 3.281
     assert correct_units(10, 2) != 10
     assert correct_units(10, 3) != 10

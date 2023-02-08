@@ -47,6 +47,7 @@ def calculate_new_pressure(pressure_start, temperature_start, temperature_end, g
         return pressure_start * 2.71828 ** (-(gravity_sea_level / (gas_constant * temperature_start)) * (height_end - height_start))
 
 
+
 def calculate_density(pressure_local, temperature_local):
     return pressure_local / (gas_constant * temperature_local)
 
