@@ -21,15 +21,28 @@ class MenuError(Exception):
     pass
 
 
-def temperature_kelvin_to_celsius(temperature_local):
-    return temperature_local - 273.15
+def temperature_kelvin_to_celsius(temp):
+    """
+    :param temp: Temperature in Kelvin
+    :return: Temperature in Celsius
+    """
+    return temp - 273.15
 
 
-def temperature_celsius_to_kelvin(temperature_local):
-    return temperature_local + 273.15
+def temperature_celsius_to_kelvin(temp):
+    """
+    :param temp: Temperature in Celsius
+    :return: Temperature in Kelvin
+    """
+    return temp + 273.15
 
 
 def ceiling(value, ceiling_value):
+    """
+    :param value: Value that cannot exceed ceiling
+    :param ceiling_value: Ceiling value that can not be exceeded
+    :return: limited value
+    """
     if value <= ceiling_value:
         return value
     if value > ceiling_value:
@@ -45,7 +58,6 @@ def calculate_new_pressure(pressure_start, temperature_start, temperature_end, g
         return pressure_start * (temperature_end / temperature_start) ** (-gravity_sea_level / (gradient * gas_constant))
     if gradient == 0:
         return pressure_start * 2.71828 ** (-(gravity_sea_level / (gas_constant * temperature_start)) * (height_end - height_start))
-
 
 
 def calculate_density(pressure_local, temperature_local):
