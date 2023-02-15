@@ -1,3 +1,7 @@
+"""
+Simple ISA-Calculator
+"""
+
 #  --- Constants ---
 gravity_sea_level = 9.80665  # m/s2
 gas_constant = 287.0  # J/kgK
@@ -14,10 +18,16 @@ layer_gradients = [-0.0065, 0, 0.0010, 0.0028, 0, -0.0028, -0.0020]
 
 
 class HeightError(Exception):
+    """
+    Error for invalid heights
+    """
     pass
 
 
 class MenuError(Exception):
+    """
+    Error for invalid menu entries
+    """
     pass
 
 
@@ -37,7 +47,7 @@ def temperature_celsius_to_kelvin(temp):
     return temp + 273.15
 
 
-def ceiling(value, ceiling_value):
+def ceiling(value: float | int, ceiling_value: float | int) -> float | int:
     """
     :param value: Value that cannot exceed ceiling
     :param ceiling_value: Ceiling value that can not be exceeded
@@ -49,35 +59,69 @@ def ceiling(value, ceiling_value):
         return ceiling_value
 
 
-def calculate_temperature(temperature_start, gradient, height_start, height_end):
+def calculate_temperature(temperature_start: float, gradient: float, height_start: float, height_end: float) -> float:
+    """
+    calculate new temperature based on constant temperature gradient
+    :param temperature_start: temperature in Celsius
+    :param gradient: constant temperature gradient in Celsius/meter
+    :param height_start: start height in meter
+    :param height_end: target height in meter
+    :return: temperature in Celsius
+    """
     return temperature_start + gradient * (height_end - height_start)
 
 
-def calculate_new_pressure(pressure_start, temperature_start, temperature_end, gradient, height_start, height_end):
+def calculate_new_pressure(pressure_start: float, temperature_start: float, temperature_end: float, gradient: float, height_start: float, height_end: float) -> float:
+    """
+
+    :param pressure_start: pressure in Pa
+    :param temperature_start: temperature in Celsius
+    :param temperature_end: temperature in Celsius
+    :param gradient: constant temperature gradient in Celsius/meter
+    :param height_start: height in meter
+    :param height_end: height in meter
+    :return: pressure in Pa
+    """
     if gradient != 0:
         return pressure_start * (temperature_end / temperature_start) ** (-gravity_sea_level / (gradient * gas_constant))
     if gradient == 0:
         return pressure_start * 2.71828 ** (-(gravity_sea_level / (gas_constant * temperature_start)) * (height_end - height_start))
 
 
-def calculate_density(pressure_local, temperature_local):
+def calculate_density(pressure_local: float, temperature_local: float) -> float:
+    """
+    calculate the density based on the gas constant, temperature and pressure
+    :param pressure_local: pressure in Pa
+    :param temperature_local: temperature in Celsius
+    :return: density in kg/m3
+    """
     return pressure_local / (gas_constant * temperature_local)
 
 
-def correct_units(input_value, unit):
+def correct_units(input_value: float, unit: str) -> float:
+    """
+    convert from meter, feet and FL to meter
+    :param input_value: the value to convert
+    :param unit: 'meter', 'feet', 'FL'
+    :return: the input value converted to the right units
+    """
     input_value = int(input_value)
-    unit = int(unit)
-    if unit == 1:
+    if unit == 'meter':
         return input_value
-    if unit == 2:
+    if unit == 'feet':
         return input_value / 3.281
-    if unit == 3:
+    if unit == 'FL':
         return (input_value * 100) / 3.281
     else:
         raise MenuError
 
 
-def calculate_isa(height_input):
+def calculate_isa(height_input: float) -> (float, float, float):
+    """
+    calculate the ISA values at specific height by iterating over layers
+    :param height_input: height in meters
+    :return: pressure in Pa, temperature in Celsius, density in kg/m3
+    """
     current_temperature = temperature_sea_level
     current_pressure = pressure_sea_level
     if height_input <= 0 or height_input > 86000:
@@ -101,14 +145,17 @@ def calculate_isa(height_input):
     return rounded_pressure, rounded_temperature, rounded_density
 
 
-def main():
+def main() -> None:
+    """
+    UI wrapper for ISA Calculator
+    """
     try:
         print("*** ISA Calculator ***\n")
         print("1. Calculate ISA for altitude in meters\n2. Calculate ISA for altitude in feet\n3. Calculate ISA for "
               "altitude in FL\n")
-        unit_choice = int(input("Enter your choice: "))
-        if unit_choice <= 0 or unit_choice > 3:
-            raise MenuError
+        unit_choice = input("Enter your choice: ")
+        if unit_choice not in ['meter', 'feet', 'FL']:
+            raise MenuError(f"Unit is entered incorrectly or not supported")
         height = int(input("Height: "))
         height = correct_units(height, unit_choice)
         pressure, temperature, density = calculate_isa(height)

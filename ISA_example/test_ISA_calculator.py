@@ -8,11 +8,11 @@ import pytest
 def test_unit_converters():
     assert ISA_Calculator.temperature_kelvin_to_celsius(0) == -273.15
     assert ISA_Calculator.temperature_celsius_to_kelvin(0) == 273.15
-    assert ISA_Calculator.correct_units(10, 1) == 10
-    assert ISA_Calculator.correct_units(10, 2) == 10 / 3.281
-    assert ISA_Calculator.correct_units(10, 2) != 10
-    assert ISA_Calculator.correct_units(10, 3) != 10
-    assert ISA_Calculator.correct_units(10, 3) == 1000 / 3.281
+    assert ISA_Calculator.correct_units(10, 'meter') == 10
+    assert ISA_Calculator.correct_units(10, 'feet') == 10 / 3.281
+    assert ISA_Calculator.correct_units(10, 'feet') != 10
+    assert ISA_Calculator.correct_units(10, 'FL') != 10
+    assert ISA_Calculator.correct_units(10, 'FL') == 1000 / 3.281
 
 
 @pytest.mark.parametrize("test_value,test_ceiling,expected_result", [(10, 20, 10), (30, 20, 20), (20, 20, 20), (-5, 20, -5),
