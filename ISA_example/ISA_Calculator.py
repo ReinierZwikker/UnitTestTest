@@ -71,7 +71,8 @@ def calculate_temperature(temperature_start: float, gradient: float, height_star
     return temperature_start + gradient * (height_end - height_start)
 
 
-def calculate_new_pressure(pressure_start: float, temperature_start: float, temperature_end: float, gradient: float, height_start: float, height_end: float) -> float:
+def calculate_new_pressure(pressure_start: float, temperature_start: float, temperature_end: float, gradient: float,
+                           height_start: float, height_end: float) -> float:
     """
 
     :param pressure_start: pressure in Pa
@@ -85,7 +86,8 @@ def calculate_new_pressure(pressure_start: float, temperature_start: float, temp
     if gradient != 0:
         return pressure_start * (temperature_end / temperature_start) ** (-gravity_sea_level / (gradient * gas_constant))
     if gradient == 0:
-        return pressure_start * 2.71828 ** (-(gravity_sea_level / (gas_constant * temperature_start)) * (height_end - height_start))
+        return pressure_start * 2.71828 ** (-(gravity_sea_level / (gas_constant * temperature_start))
+                                            * (height_end - height_start))
 
 
 def calculate_density(pressure_local: float, temperature_local: float) -> float:
@@ -155,7 +157,7 @@ def main() -> None:
               "altitude in FL\n")
         unit_choice = input("Enter your choice: ")
         if unit_choice not in ['meter', 'feet', 'FL']:
-            raise MenuError(f"Unit is entered incorrectly or not supported")
+            raise MenuError("Unit is entered incorrectly or not supported")
         height = int(input("Height: "))
         height = correct_units(height, unit_choice)
         pressure, temperature, density = calculate_isa(height)

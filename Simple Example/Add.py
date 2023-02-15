@@ -2,8 +2,6 @@
 Simple test for pytest
 """
 
-import pytest
-
 
 def add(a: int | float, b: int | float) -> int | float:
     """

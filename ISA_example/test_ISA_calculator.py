@@ -21,7 +21,8 @@ def test_ceiling_function(test_value, test_ceiling, expected_result):
     assert ISA_Calculator.ceiling(test_value, test_ceiling) == expected_result
 
 
-@pytest.mark.parametrize("test_height,expected_result", [(1, (101312.985, 288.143, 1.22511)), (85999, (0.302, 184.652, 1e-05))])
+@pytest.mark.parametrize("test_height,expected_result", [(1, (101312.985, 288.143, 1.22511)),
+                                                         (85999, (0.302, 184.652, 1e-05))])
 def test_calculate_isa(test_height, expected_result):
     assert ISA_Calculator.calculate_isa(test_height) == expected_result
 
