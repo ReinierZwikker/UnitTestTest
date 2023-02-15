@@ -62,6 +62,7 @@ def ceiling(value: float | int, ceiling_value: float | int) -> float | int:
 def calculate_temperature(temperature_start: float, gradient: float, height_start: float, height_end: float) -> float:
     """
     calculate new temperature based on constant temperature gradient
+
     :param temperature_start: temperature in Celsius
     :param gradient: constant temperature gradient in Celsius/meter
     :param height_start: start height in meter
@@ -93,6 +94,7 @@ def calculate_new_pressure(pressure_start: float, temperature_start: float, temp
 def calculate_density(pressure_local: float, temperature_local: float) -> float:
     """
     calculate the density based on the gas constant, temperature and pressure
+
     :param pressure_local: pressure in Pa
     :param temperature_local: temperature in Celsius
     :return: density in kg/m3
@@ -103,6 +105,7 @@ def calculate_density(pressure_local: float, temperature_local: float) -> float:
 def correct_units(input_value: float, unit: str) -> float:
     """
     convert from meter, feet and FL to meter
+
     :param input_value: the value to convert
     :param unit: 'meter', 'feet', 'FL'
     :return: the input value converted to the right units
@@ -121,6 +124,7 @@ def correct_units(input_value: float, unit: str) -> float:
 def calculate_isa(height_input: float) -> (float, float, float):
     """
     calculate the ISA values at specific height by iterating over layers
+
     :param height_input: height in meters
     :return: pressure in Pa, temperature in Celsius, density in kg/m3
     """
